@@ -313,4 +313,4 @@ while True:
         # вызов функции обработки слов
         res = call(a)
     else:
-        print(recognizer.PartialResult())
+        # print(recognizer.PartialResult())
