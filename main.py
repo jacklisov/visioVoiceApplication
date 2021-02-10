@@ -163,10 +163,13 @@ def call(a):
     if a == "соединить элементы":
         if "end" in globals():
             if "root1" in globals():
+                globals().pop("root1", None)
                 connectDefault(globals()['visio'], globals()['doc'].Pages.Item(1), globals()['lastElement1'], globals()['lastCmd'])
             if "root2" in globals():
+                globals().pop("root2", None)
                 connectDefault(globals()['visio'], globals()['doc'].Pages.Item(1), globals()['lastElement2'], globals()['lastCmd'])
             if "root3" in globals():
+                globals().pop("root3", None)
                 connectDefault(globals()['visio'], globals()['doc'].Pages.Item(1), globals()['lastTree'], globals()['lastCmd'])
 
         if "lastCmd" in globals():
@@ -238,23 +241,27 @@ def call(a):
         globals()['main'] = globals()['lastCmd']
         globals()['y'] = globals()['y'] - 1
         globals()['rootX'] = globals()['x']
+        globals()['rootY'] = globals()['y']
+
         print("Чтобы присвоить текст произнесите команду: 'Присвоить текст'")
         print("Для соединения элементов произнесите команду: 'Соединить элементы'")
         print("Для завершения блока решения произнесите команду: 'Завершить решение'")
         return 1
     # ветка добавления первой ветки
-    if a == "добавить в первую ветку":
+    if a == "добавить первую ветку" or a == "добавить первая ветку" or a == "добавить в первую ветку" :
         globals()['root1'] = True
         globals()['lastCmd'] = globals()['main']
-        globals()['x'] = globals()['rootX'] - 1
+        globals()['x'] = globals()['rootX'] - 2
+        globals()['y'] = globals()['rootY']
         print('Теперь голосом добавьте элементы')
         print('Для соединения используйте команду: "соединить элементы"')
     # ветка добавления первой ветки
-    if a == "добавить во вторую ветку":
+    if a == "добавить во вторую ветку" or a == "добавить во второй ветку":
         globals()['lastElement1'] = globals()['lastCmd']
         globals()['lastCmd'] = globals()['main']
         globals()['root2'] = True
-        globals()['x'] = globals()['rootX'] + 1
+        globals()['x'] = globals()['rootX'] + 2
+        globals()['y'] = globals()['rootY']
         print('Теперь голосом добавьте элементы')
         print('Для соединения используйте команду: "соединить элементы"')
     # ветка добавления первой ветки
@@ -263,10 +270,13 @@ def call(a):
         globals()['lastCmd'] = globals()['main']
         globals()['root3'] = True
         globals()['x'] = globals()['rootX']
+        globals()['y'] = globals()['rootY'] - 1
         print('Теперь голосом добавьте элементы')
         print('Для соединения используйте команду: "соединить элементы"')
     # ветка завершения решения
     if a == "завершить решение":
+        if "root2" in globals():
+            globals()['lastElement2'] = globals()['lastCmd']
         globals()['lastTree'] = globals()['lastCmd']
         globals()['end'] = True
         globals()['x'] = globals()['rootX']
@@ -302,3 +312,5 @@ while True:
         
         # вызов функции обработки слов
         res = call(a)
+    else:
+        print(recognizer.PartialResult())
