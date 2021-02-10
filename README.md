@@ -1,4 +1,4 @@
-# Python voice assistant for MS Visio
+# Python voice assistant for MS Visio Flowchart
 ### English
 
 This is a program that allows you to control MS Visio using voice commands. The project was developed in 1.5 days in the Python programming language, using the Pypiwin32, pyAudio and vosk libraries.
